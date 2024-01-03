@@ -21,7 +21,7 @@ mongoose.connect(MONGODB_URL!).then(() => console.log("mongodb successfully"));
 
 app.use("/v1/products", productRoute);
 app.use("/v1/auth", authRoute);
-app.use("/v1/users", authenticateToken, userRoute);
+app.use("/v1/users", userRoute);
 
 app.listen(port, () => {
   console.log("listening on port " + port);

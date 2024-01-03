@@ -6,8 +6,8 @@ import { signInSchema } from "../ultil/schema";
 
 const authStore = useAuthStore();
 const user = reactive({
-  email: "vuquynh@gmail.com",
-  password: "vuquynh",
+  email: "anhtrung@gmail.com",
+  password: "anhtrung",
 });
 
 const errors = reactive({

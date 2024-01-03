@@ -25,3 +25,10 @@ export const signUpSchema = Joi.object({
   password: Joi.string().min(8).max(16).required(),
   confirm_password: Joi.ref("password"),
 });
+
+export const productSchema = Joi.object({
+  name: Joi.string().required(),
+  price: Joi.number().min(0).required(),
+  quantityInStock: Joi.number().min(0).required(),
+  image: Joi.string().uri().required(),
+});

@@ -138,63 +138,74 @@ const handleLogout = async () => {
               <span v-else>Chưa có sản phẩm</span>
             </div>
           </RouterLink>
-          <span v-if="userState.isLoggin" class="hover-trigger group relative">
-            <i class="fa-regular fa-user"></i>
-            <Transition name="fade">
-              <ul
-                class="hidden group-hover:block absolute top-[30px] right-0 rounded z-[2] text-sm py-2 px-3 space-y-2 w-[200px] bg-gradient-to-l from-transparent to-neutral-400"
-              >
-                <li>
-                  <RouterLink
-                    to="/profile"
-                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                  >
-                    <i class="fa-solid fa-circle-user"></i> Manage My Account
-                  </RouterLink>
-                </li>
-                <li>
-                  <RouterLink
-                    to=""
-                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                  >
-                    <i class="fa-solid fa-bag-shopping mr-3"></i>My Order
-                  </RouterLink>
-                </li>
-                <li>
-                  <RouterLink
-                    to=""
-                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                  >
-                    <i class="fa-solid fa-ban mr-3"></i>My Cancellations
-                  </RouterLink>
-                </li>
-                <li>
-                  <RouterLink
-                    to=""
-                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                  >
-                    <i class="fa-regular fa-star mr-3"></i>My Reviews
-                  </RouterLink>
-                </li>
-                <li @click="handleLogout">
-                  <RouterLink
-                    to=""
-                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                  >
-                    <i class="fa-solid fa-right-from-bracket mr-3"></i>Logout
-                  </RouterLink>
-                </li>
-              </ul>
-            </Transition>
-          </span>
-          <span v-else>
-            <RouterLink
-              class="text-base border-[1px] border-white rounded py-1 px-2"
-              to="/signin"
-              >Sign in</RouterLink
-            >
-          </span>
         </p>
+      </div>
+      <div class="text-xl">
+        <span v-if="userState.isLoggin" class="flex items-center space-x-2">
+          <i class="fa-regular fa-user"></i>
+          <div class="text-base">
+            Hi,
+            <RouterLink
+              to="/profile"
+              class="text-[#0a465e] shadow-sm cursor-pointer hover-trigger group relative"
+            >
+              {{ userState.user.name }} !!
+              <Transition name="fade">
+                <ul
+                  class="hidden group-hover:block absolute top-[20px] right-[0px] rounded z-[2] text-sm py-2 px-3 space-y-2 w-[200px] bg-gradient-to-l from-transparent to-neutral-400 z-100"
+                >
+                  <li>
+                    <RouterLink
+                      to="/profile"
+                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    >
+                      <i class="fa-solid fa-circle-user"></i> Manage My Account
+                    </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink
+                      to="/cart"
+                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    >
+                      <i class="fa-solid fa-bag-shopping mr-3"></i>My Order
+                    </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink
+                      to="/checkout"
+                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    >
+                      <i class="fa-solid fa-ban mr-3"></i>My Checkout
+                    </RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink
+                      to=""
+                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    >
+                      <i class="fa-regular fa-star mr-3"></i>My Reviews
+                    </RouterLink>
+                  </li>
+                  <li @click="handleLogout">
+                    <RouterLink
+                      to="/logout"
+                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    >
+                      <i class="fa-solid fa-right-from-bracket mr-3"></i>Logout
+                    </RouterLink>
+                  </li>
+                </ul>
+              </Transition></RouterLink
+            >
+          </div>
+        </span>
+        <span v-else>
+          <RouterLink
+            class="text-base border-[1px] border-white rounded py-1 px-2"
+            to="/signin"
+            >Sign in</RouterLink
+          >
+        </span>
       </div>
     </div>
   </section>

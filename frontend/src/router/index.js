@@ -155,9 +155,11 @@ router.beforeEach(async (to, from, next) => {
       to.name === "Cart" ||
       to.name === "Wishlist" ||
       to.name === "Dashboard" ||
-      to.name === "Products"
+      to.path.includes("/admin")
     ) {
       try {
+        localStorage.setItem("requestedPath", to.fullPath);
+
         const result = await Swal.fire({
           title: "Yêu cầu đăng nhập",
           text: "Bạn cần đăng nhập để truy cập trang này",

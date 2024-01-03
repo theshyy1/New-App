@@ -22,15 +22,26 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       if (data && data.accessToken && data.user) {
         localStorage.setItem("access_token", data.accessToken);
+        const requestedPath = localStorage.getItem("requestedPath");
 
         userState.token = data.accessToken;
         userState.user = data.user;
         userState.isLoggin = true;
 
         if (data.user.admin === true) {
-          await router.push({ path: "/admin" });
+          if (requestedPath) {
+            localStorage.removeItem("requestedPath");
+            await router.push({ path: requestedPath });
+          } else {
+            await router.push({ path: "/admin" });
+          }
         } else {
-          await router.push({ path: "/" });
+          if (requestedPath) {
+            localStorage.removeItem("requestedPath");
+            await router.push({ path: requestedPath });
+          } else {
+            await router.push({ path: "/" });
+          }
         }
         toast.success("Đăng nhập thành công !", {
           autoClose: 1500,

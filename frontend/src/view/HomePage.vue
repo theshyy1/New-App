@@ -256,7 +256,7 @@ const show = reactive({
               <img
                 :src="product.image"
                 :alt="product.name"
-                class="object-cover"
+                class="object-cover w-[270px] h-[250px]"
               />
             </RouterLink>
             <p
@@ -302,16 +302,30 @@ const show = reactive({
     <!-- Hiển thị phân trang -->
     <div class="mt-4">
       <nav class="flex justify-end">
-        <ul class="flex">
+        <ul class="flex items-center cursor-pointer">
+          <RouterLink
+            v-if="productFilters.currentPage > 1"
+            :to="`/products?page=${productFilters.currentPage - 1}`"
+            class="px-3 py-1 rounded border border-gray-300 mr-2"
+          >
+            Previous
+          </RouterLink>
           <li v-for="page in productFilters.totalPages" :key="page">
-            <router-link
+            <RouterLink
               :to="`/products?page=${page}`"
               class="px-3 py-1 rounded border border-gray-300 mr-2"
               :class="productFilters.currentPage === page ? 'bg-gray-300' : ''"
             >
               {{ page }}
-            </router-link>
+            </RouterLink>
           </li>
+          <RouterLink
+            v-if="productFilters.currentPage < productFilters.totalPages"
+            :to="`/products?page=${productFilters.currentPage + 1}`"
+            class="px-3 py-1 rounded border border-gray-300 mr-2"
+          >
+            Next
+          </RouterLink>
         </ul>
       </nav>
     </div>

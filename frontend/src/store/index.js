@@ -1,17 +1,15 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import {
   getProducts2API,
   deleteProductAPI,
   addProductAPI,
   getProductsAPI,
 } from "../services/http";
-import { useRouter } from "vue-router";
 
 export const useProductStore = defineStore("products", () => {
   const allProducts = ref([]);
   const isLoading = ref(false);
-  const router = useRouter();
 
   const getFilteredProducts = async (page = 1, limit) => {
     const res = await getProductsAPI(page, limit);
