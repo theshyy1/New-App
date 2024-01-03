@@ -1,0 +1,186 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "HAVIT HV-G92 Gamepad",
+      "price": 120,
+      "star": 4,
+      "soldQuantity": 88,
+      "image": "https://picsum.photos/271/250",
+      "quantityInStock": 50
+    },
+    {
+      "id": 2,
+      "name": "AK-900 Wired Keyboard",
+      "price": 960,
+      "star": 5,
+      "soldQuantity": 75,
+      "image": "https://picsum.photos/272/250",
+      "quantityInStock": 50
+    },
+    {
+      "id": 3,
+      "name": "IPS LCD Gaming Monitor",
+      "price": 370,
+      "star": 4,
+      "soldQuantity": 99,
+      "image": "https://picsum.photos/273/250",
+      "quantityInStock": 30
+    },
+    {
+      "id": 4,
+      "name": "S-Series Comfort Chair",
+      "price": 375,
+      "star": 3,
+      "soldQuantity": 88,
+      "image": "https://picsum.photos/274/250",
+      "quantityInStock": 58
+    },
+    {
+      "id": 5,
+      "name": "S-Series Comfort Chair 1",
+      "price": 300,
+      "star": 2,
+      "soldQuantity": 28,
+      "image": "https://picsum.photos/275/250",
+      "quantityInStock": 47
+    },
+    {
+      "id": 6,
+      "name": "Mac M1",
+      "price": 1099,
+      "star": 5,
+      "soldQuantity": 88,
+      "image": "https://picsum.photos/271/251",
+      "quantityInStock": 50
+    },
+    {
+      "id": 7,
+      "name": "Keyboard Profestional",
+      "price": 960,
+      "star": 3,
+      "soldQuantity": 75,
+      "image": "https://picsum.photos/272/251",
+      "quantityInStock": 70
+    },
+    {
+      "id": 8,
+      "name": "Super Mouse",
+      "price": 379,
+      "star": 4,
+      "soldQuantity": 99,
+      "image": "https://picsum.photos/273/251",
+      "quantityInStock": 28
+    }
+  ],
+  "users": [
+    {
+      "email": "anhtrung@gmail.com",
+      "password": "$2a$10$xcAHEv5sEFWTiwS/sUyzm.Jin45FPKNeGZNuatXvkLsKqWPdIQNiu",
+      "name": "Hoàng Viết Trungg",
+      "id": 1,
+      "gender": "1",
+      "birthDay": "1999-02-18",
+      "address": "Hiệp Thuận, Phúc Thọ, Hà Nội",
+      "phone": "123456781291",
+      "image": "/src/assets/hoangtrung.jpg",
+      "description": "Front-end dev juniors",
+      "careItems": [],
+      "role": "1",
+      "cart": []
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "$2a$10$sWQ5Ar8cHzfrzDi5C46XT.QRoPeGdzvfFrQc/6Udz0llIO0BB0xQS",
+      "name": "Vũ Ánh Quỳnh X",
+      "phone": "0123456789",
+      "address": "Nam Định",
+      "gender": "2",
+      "birthDay": "2002-04-21",
+      "description": "Hi, my name is Quynh, i'm  girl friend of a junior developer ai IMTA TECH company. Nice to meet you !",
+      "image": "/src/assets/vuquynh.jpg",
+      "id": 2,
+      "role": "2",
+      "careItems": [],
+      "cart": [
+        {
+          "id": 2,
+          "name": "AK-900 Wired Keyboard",
+          "oldPrice": 1160,
+          "newPrice": 960,
+          "star": 5,
+          "soldQuantity": 75,
+          "image": "https://picsum.photos/272/250",
+          "quantityInStock": 50,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "email": "admin3@gmail.com",
+      "password": "$2a$10$sWQ5Ar8cHzfrzDi5C46XT.QRoPeGdzvfFrQc/6Udz0llIO0BB0xQS",
+      "name": "Vũ Ánh Quỳnh",
+      "phone": "0123456789",
+      "address": "Nam Định",
+      "gender": "2",
+      "birthDay": "2002-04-21",
+      "description": "Hi, my name is Quynh, i'm  girl friend of a junior developer ai IMTA TECH company. Nice to meet you !",
+      "image": "/src/assets/vuquynh.jpg",
+      "id": 3,
+      "role": "2",
+      "careItems": [],
+      "cart": []
+    },
+    {
+      "email": "admin4@gmail.com",
+      "password": "$2a$10$sWQ5Ar8cHzfrzDi5C46XT.QRoPeGdzvfFrQc/6Udz0llIO0BB0xQS",
+      "name": "Vũ Ánh Quỳnh",
+      "phone": "0123456789",
+      "address": "Nam Định",
+      "gender": "2",
+      "birthDay": "2002-04-21",
+      "description": "Hi, my name is Quynh, i'm  girl friend of a junior developer ai IMTA TECH company. Nice to meet you !",
+      "image": "/src/assets/vuquynh.jpg",
+      "id": 4,
+      "role": "2",
+      "careItems": [],
+      "cart": []
+    },
+    {
+      "email": "admin5@gmail.com",
+      "password": "$2a$10$sWQ5Ar8cHzfrzDi5C46XT.QRoPeGdzvfFrQc/6Udz0llIO0BB0xQS",
+      "name": "Vũ Ánh Quỳnh",
+      "phone": "0123456789",
+      "address": "Nam Định",
+      "gender": "2",
+      "birthDay": "2002-04-21",
+      "description": "Hi, my name is Quynh, i'm  girl friend of a junior developer ai IMTA TECH company. Nice to meet you !",
+      "image": "/src/assets/vuquynh.jpg",
+      "id": 5,
+      "role": "2",
+      "careItems": [],
+      "cart": []
+    },
+    {
+      "email": "kimlong@gmail.com",
+      "password": "$2a$10$GgYgVUb5fReKxUiu.0EcnuEXbDaUyDG9qafFrNp0FmIJhkNhiJWP6",
+      "name": "Kim Van Long",
+      "confirm_password": "anhtrung",
+      "careItems": [
+        {
+          "id": 6,
+          "name": "Mac M1",
+          "oldPrice": 1200,
+          "newPrice": 1099,
+          "star": 5,
+          "soldQuantity": 88,
+          "image": "https://picsum.photos/271/251",
+          "quantityInStock": 50
+        }
+      ],
+      "cart": [],
+      "role": "2",
+      "id": 6
+    }
+  ]
+}
