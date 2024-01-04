@@ -20,7 +20,9 @@ const AuthController = {
         birthday: "",
         description: "",
       });
-      res.status(200).json({ msg: "Đăng ký tài khoản thành công!", newUser });
+      res
+        .status(200)
+        .json({ message: "Đăng ký tài khoản thành công!", newUser });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -31,7 +33,7 @@ const AuthController = {
         req.params.id,
         req.body
       );
-      res.status(200).json({ msg: "Updated user successfully", newUser });
+      res.status(200).json({ message: "Updated user successfully", newUser });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -40,7 +42,7 @@ const AuthController = {
   generateAccessToken: (user: IUser): string => {
     return jwt.sign(
       {
-        id: user.id,
+        id: user._id,
         admin: user.admin,
       },
       "myaccesskey",
@@ -50,7 +52,7 @@ const AuthController = {
   generateRefreshToken: (user: IUser): string => {
     return jwt.sign(
       {
-        id: user.id,
+        id: user._id,
         admin: user.admin,
       },
       "myrefreshtoken",
@@ -62,13 +64,13 @@ const AuthController = {
       const { email, password } = req.body;
       const validUser: any = await User.findOne({ email: email });
       if (!validUser) {
-        res.status(400).json("User not found");
+        res.status(400).json({ message: "User not found" });
         return;
       }
 
       const truePassword = bcrypt.compareSync(password, validUser!.password);
       if (!truePassword) {
-        res.status(400).json("Wrong password");
+        res.status(400).json({ message: "Wrong password" });
         return;
       }
 
@@ -97,7 +99,6 @@ const AuthController = {
     }
   },
   refreshToken: async (req: Request, res: Response) => {
-    // const refreshToken = req.body.refresh_token;
     const refreshToken = req.cookies.refresh_token;
     if (!refreshToken) {
       res.status(401).json({ message: "You'r not loggin" });

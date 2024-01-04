@@ -6,8 +6,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   admin: boolean;
-  careItems: Types.Array<IProduct>; // Sử dụng kiểu Array của Mongoose
-  cart: Types.Array<IProduct>; // Sử dụng kiểu Array của Mongoose
+  careItems: Types.Array<IProduct>;
+  cart: Types.Array<IProduct>;
   gender: string;
   phone: string;
   address: string;
@@ -20,9 +20,9 @@ const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  admin: { type: Boolean, default: false }, // Sửa kiểu dữ liệu thành Boolean
-  careItems: [{ type: Schema.Types.ObjectId, ref: "Product" }], // Sử dụng reference tới Product model
-  cart: [{ type: Schema.Types.ObjectId, ref: "Product" }], // Sử dụng reference tới Product model
+  admin: { type: Boolean, default: false },
+  careItems: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+  cart: [{ type: Schema.Types.ObjectId, ref: "Product" }],
   gender: { type: String },
   birthday: { type: String },
   address: { type: String },

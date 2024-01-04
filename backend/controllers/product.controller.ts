@@ -8,10 +8,10 @@ const productController = {
 
     try {
       const skip = (page - 1) * limit;
-      const products = await Product.find().skip(skip).limit(limit);
+      const products: IProduct[] = await Product.find().skip(skip).limit(limit);
       const totalProducts = await Product.countDocuments();
       const totalPages = Math.ceil(totalProducts / limit);
-      const allProducts = await Product.find();
+      const allProducts: IProduct[] = await Product.find();
       res.status(200).json({
         products,
         totalPages,
@@ -26,13 +26,13 @@ const productController = {
     try {
       const exist = await Product.findOne({ name: req.body.name });
       if (exist) {
-        res.status(400).json({ msg: "Product already exists" });
+        res.status(400).json({ message: "Product already exists" });
         return;
       }
 
       const product = { ...req.body, star: 0, soldQuantity: 0 };
       const newProduct: IProduct = await Product.create(product);
-      res.status(200).json(newProduct);
+      res.status(200).json({ message: "Created successfully", newProduct });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -51,7 +51,7 @@ const productController = {
         req.params.id,
         req.body
       );
-      res.status(200).json({ msg: "Updated successfully", updatedProduct });
+      res.status(200).json({ message: "Updated successfully", updatedProduct });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -59,7 +59,7 @@ const productController = {
   deleteProduct: async (req: Request, res: Response) => {
     try {
       await Product.findByIdAndDelete(req.params.id);
-      res.status(200).json({ msg: "Deleted successfully" });
+      res.status(200).json({ message: "Deleted successfully" });
     } catch (error) {
       res.status(500).json(error);
     }
