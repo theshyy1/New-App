@@ -5,9 +5,10 @@ import { toast } from "vue3-toastify";
 import { updateUserAPI } from "../services/http";
 import { useRouter } from "vue-router";
 import { getNewestPrice } from "../ultil";
+import { useProductStore } from "../store";
 const router = useRouter();
 const { userState } = useAuthStore();
-
+const store = useProductStore();
 // Discount price
 const codeDiscount = ref("");
 const shipPrice = ref(userState.user.cart.length * 20);
@@ -72,6 +73,7 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>FirstName*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
@@ -80,6 +82,7 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>Company Name*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
@@ -88,6 +91,7 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>Street Address*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
@@ -96,6 +100,7 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>Town/City*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
@@ -104,6 +109,7 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>Phone Number*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
@@ -112,13 +118,20 @@ const handleCheckout = async () => {
       <div class="my-3">
         <p>Email Address*</p>
         <input
+          :class="{ 'text-black': store.darkTheme }"
           type="text"
           placeholder=""
           class="py-2 px-3 bg-neutral-300 w-[400px] mt-2"
         />
       </div>
       <div class="my-3 flex">
-        <input type="checkbox" placeholder="" class="mr-2 bg-red-600" checked />
+        <input
+          :class="{ 'text-black': store.darkTheme }"
+          type="checkbox"
+          placeholder=""
+          class="mr-2 bg-red-600"
+          checked
+        />
         <p>Save this information for faster check-out next time</p>
       </div>
     </section>
@@ -133,7 +146,7 @@ const handleCheckout = async () => {
                 :to="`/products/${item.id}`"
                 class="flex justify-around items-center w-full"
               >
-                <div class="flex items-center">
+                <div class="flex items-center py-2">
                   <img
                     :src="item.image"
                     class="object-cover w-[40px] h-[40px] mr-3 rounded"

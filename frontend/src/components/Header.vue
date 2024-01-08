@@ -30,7 +30,10 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <header class="bg-white text-black">
+  <header
+    class="bg-white text-black"
+    :class="{ 'bg-[#1c1b1e] text-white': productStore.darkTheme }"
+  >
     <div class="container py-[14px] flex justify-between items-center">
       <span></span>
       <p class="text-sm">
@@ -140,6 +143,8 @@ const handleLogout = async () => {
           </RouterLink>
         </p>
       </div>
+      <button @click="productStore.toggleTheme">Theme</button>
+
       <div class="text-xl">
         <span v-if="userState.isLoggin" class="flex items-center space-x-2">
           <i class="fa-regular fa-user"></i>

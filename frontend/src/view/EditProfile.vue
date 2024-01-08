@@ -3,11 +3,13 @@ import { useAuthStore } from "../store/auth";
 import { updateUserAPI } from "../services/http";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
+import { useProductStore } from "../store";
 const router = useRouter();
 
 const {
   userState: { user },
 } = useAuthStore();
+const store = useProductStore();
 
 const handleSave = async (event) => {
   event.preventDefault();
@@ -66,7 +68,10 @@ const handleSave = async (event) => {
           <li>Địa chỉ</li>
           <li>Số điện thoại</li>
         </ul>
-        <ul class="flex flex-col items-start space-y-4 box-border">
+        <ul
+          class="flex flex-col items-start space-y-4 box-border"
+          :class="{ 'text-black': store.darkTheme }"
+        >
           <li>
             {{ user.email }}
           </li>

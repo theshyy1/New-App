@@ -2,10 +2,12 @@
 import { useAuthStore } from "../store/auth";
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
+import { useProductStore } from "../store";
 
 const {
   userState: { user },
 } = useAuthStore();
+const store = useProductStore();
 
 const birthday = computed(() =>
   user.birthday ? user.birthday.split("-") : ["01", "01", "2000"]
@@ -30,12 +32,14 @@ const hidePhoneNumber = computed(() => {
         v-if="user.admin === true"
         :to="`/admin/profile/${user.id}/edit`"
         class="underline absolute top-8 right-[100px] hover:text-red-600"
+        :class="{ 'text-black': store.darkTheme }"
         ><i class="fa-solid fa-gear"></i> Thay đổi thông tin</RouterLink
       >
       <RouterLink
         v-else
         :to="`/profile/${user._id}/edit`"
         class="underline absolute top-8 right-[100px] hover:text-red-600"
+        :class="{ 'text-black': store.darkTheme }"
         ><i class="fa-solid fa-gear"></i> Thay đổi thông tin</RouterLink
       >
       <div class="">
@@ -68,13 +72,17 @@ const hidePhoneNumber = computed(() => {
         </ul>
         <ul class="flex flex-col items-start space-y-4 box-border">
           <li>
-            <p>{{ user.email || "" }}</p>
+            <p :class="{ 'text-black': store.darkTheme }">
+              {{ user.email || "" }}
+            </p>
           </li>
           <li>
-            <p>{{ user.name || "" }}</p>
+            <p :class="{ 'text-black': store.darkTheme }">
+              {{ user.name || "" }}
+            </p>
           </li>
           <li>
-            <p>
+            <p :class="{ 'text-black': store.darkTheme }">
               <input
                 type="radio"
                 value="1"
@@ -95,14 +103,18 @@ const hidePhoneNumber = computed(() => {
               />Khác
             </p>
           </li>
-          <li>
+          <li :class="{ 'text-black': store.darkTheme }">
             {{ `${birthday[2]} / ${birthday[1]} / ${birthday[0]}` }}
           </li>
           <li>
-            <span class="">{{ user.address || "..." }}</span>
+            <span class="" :class="{ 'text-black': store.darkTheme }">{{
+              user.address || "..."
+            }}</span>
           </li>
           <li>
-            <span class="">{{ hidePhoneNumber || "..." }}</span>
+            <span class="" :class="{ 'text-black': store.darkTheme }">{{
+              hidePhoneNumber || "..."
+            }}</span>
           </li>
         </ul>
       </div>

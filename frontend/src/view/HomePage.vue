@@ -23,6 +23,8 @@ const currentPage = computed(() => {
   return page;
 });
 
+const theme = computed(() => store.darkTheme);
+
 onMounted(() => store.getFilteredProducts(currentPage.value, limit));
 watch(currentPage, (newPage) => {
   store.getFilteredProducts(newPage, limit);
@@ -198,10 +200,12 @@ const show = reactive({
         <div class="flex items-center space-x-2">
           <span
             class="flex justify-center items-center w-[46px] h-[46px] bg-neutral-300 rounded-full"
+            :class="{ 'text-black': theme }"
             ><i class="fa-solid fa-arrow-left"></i
           ></span>
           <span
             class="flex justify-center items-center w-[46px] h-[46px] bg-neutral-300 rounded-full"
+            :class="{ 'text-black': theme }"
             ><i class="fa-solid fa-arrow-right"></i
           ></span>
         </div>
@@ -209,6 +213,7 @@ const show = reactive({
     </div>
     <ul
       class="flex space-x-5 items-center border-[1px] bg-neutral-200 py-2 px-3 my-6"
+      :class="{ 'text-black ': theme }"
     >
       <span class="ml-5">Sắp xếp theo</span>
       <li @click="show.name = !show.name">
@@ -271,6 +276,7 @@ const show = reactive({
                 v-else
                 @click="handleClick(product)"
                 class="fa-regular fa-heart text-2xl"
+                :class="{ 'text-black': theme }"
               ></i>
             </p>
           </div>

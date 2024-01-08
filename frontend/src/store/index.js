@@ -10,6 +10,11 @@ import {
 export const useProductStore = defineStore("products", () => {
   const allProducts = ref([]);
   const isLoading = ref(false);
+  const darkTheme = ref(false);
+
+  const toggleTheme = () => {
+    darkTheme.value = !darkTheme.value;
+  };
 
   const getFilteredProducts = async (page = 1, limit) => {
     const res = await getProductsAPI(page, limit);
@@ -47,5 +52,7 @@ export const useProductStore = defineStore("products", () => {
     getAllProducts,
     deleteProduct,
     addProduct,
+    darkTheme,
+    toggleTheme,
   };
 });

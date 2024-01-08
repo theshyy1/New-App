@@ -3,8 +3,10 @@ import { useAuthStore } from "../store/auth";
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { signInSchema } from "../ultil/schema";
+import { useProductStore } from "../store";
 
 const authStore = useAuthStore();
+const store = useProductStore();
 const user = reactive({
   email: "anhtrung@gmail.com",
   password: "anhtrung",
@@ -44,7 +46,8 @@ const handleLogin = async () => {
         <input
           type="text"
           placeholder="Email or Phone number"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3 px-3"
+          :class="{ 'text-black': store.darkTheme }"
           v-model="user.email"
         />
         <span
@@ -55,12 +58,14 @@ const handleLogin = async () => {
         <input
           type="password"
           placeholder="Password"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3 px-3"
+          :class="{ 'text-black': store.darkTheme }"
           v-model="user.password"
         />
         <span
           v-if="errors.password"
           class="text-sm text-red-500 w-[300px] block bg-red-200 border-[1px] py-2 px-3"
+          :class="{ 'text-white': store.darkTheme }"
           >{{ errors.password }}</span
         >
         <p class="my-4 text-neutral-600">

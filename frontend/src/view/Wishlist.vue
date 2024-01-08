@@ -3,10 +3,12 @@ import { useAuthStore } from "../store/auth";
 import { updateUserAPI } from "../services/http";
 import { toast } from "vue3-toastify";
 import { getNewestPrice } from "../ultil";
+import { useProductStore } from "../store";
 
 const {
   userState: { user },
 } = useAuthStore();
+const store = useProductStore();
 
 const moveAllToBag = async () => {
   const allItemsCare = [
@@ -74,6 +76,7 @@ const handleDelete = async (product) => {
       <button
         @click="moveAllToBag"
         class="border-[1px] border-black py-3 px-7 hover:text-white hover:border-orange-500 rounded hover:bg-orange-400"
+        :class="{ 'border-white text-white': store.darkTheme }"
       >
         Move All To Bag
       </button>
@@ -92,7 +95,10 @@ const handleDelete = async (product) => {
             class="flex justify-center items-center absolute top-4 right-[35px] w-[30px] h-[30px] bg-white rounded-full hover:opacity-70 cursor-pointer"
             @click="handleDelete(product)"
           >
-            <i class="fa-solid fa-trash-can text-xl"></i>
+            <i
+              class="fa-solid fa-trash-can text-xl"
+              :class="{ 'text-black': store.darkTheme }"
+            ></i>
           </p>
           <span
             @click="addToCart(product)"
