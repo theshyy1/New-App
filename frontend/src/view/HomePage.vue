@@ -60,7 +60,7 @@ const handleClick = async (product) => {
     }
   } else {
     await updateUserAPI(user);
-    toast.success("Added x1", {
+    toast.success("Added item to Wishlist !!", {
       autoClose: 1500,
       position: "bottom-right",
       theme: "colored",
@@ -76,7 +76,7 @@ const removeClick = async (product) => {
   }
 
   await updateUserAPI(user);
-  toast.error("Removed x1", {
+  toast.error("Removed item from Wishlist", {
     autoClose: 1500,
     position: "bottom-right",
     theme: "colored",
@@ -88,6 +88,26 @@ const checkItem = (product) => {
   return (
     user && user.careItems.findIndex((item) => item._id === product._id) !== -1
   );
+};
+
+// Add to cart
+
+const addToCart = async (product) => {
+  const index = user.cart.findIndex((item) => item._id === product._id);
+  if (index !== -1) {
+    user.cart[index].quantity++;
+  } else {
+    user.cart.push({ ...product, quantity: 1 });
+  }
+
+  const res = await updateUserAPI(user);
+  if (res) {
+    toast.success("Added x1", {
+      autoClose: 1500,
+      position: "bottom-right",
+      theme: "colored",
+    });
+  }
 };
 
 // Sorted with options
@@ -215,14 +235,14 @@ const show = reactive({
       class="flex space-x-5 items-center border-[1px] bg-neutral-200 py-2 px-3 my-6"
       :class="{ 'text-black ': theme }"
     >
-      <span class="ml-5">Sắp xếp theo</span>
+      <span class="ml-5">Sort by</span>
       <li @click="show.name = !show.name">
         <button
           class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
           @click="sortByName"
           transition="fade"
         >
-          Tên sản phẩm
+          Product's name
           <i v-if="show.name" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -232,7 +252,7 @@ const show = reactive({
           @click="sortByPrice"
           class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
         >
-          Giá sản phẩm
+          Product's price
           <i v-if="show.price" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -242,7 +262,7 @@ const show = reactive({
           @click="sortyByRate"
           class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
         >
-          Đánh giá
+          Rating
           <i v-if="show.star" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -256,51 +276,77 @@ const show = reactive({
           :key="product.id"
           class="shadow-md py-4 px-2"
         >
-          <div class="relative mb-4">
-            <RouterLink :to="`/products/${product._id}`">
-              <img
-                :src="product.image"
-                :alt="product.name"
-                class="object-cover w-[270px] h-[250px]"
-              />
-            </RouterLink>
-            <p
-              class="flex justify-center items-center absolute top-4 right-[35px] w-[36px] h-[36px] bg-white rounded-full hover:opacity-70 cursor-pointer"
-            >
-              <i
-                class="fa-solid fa-heart text-2xl text-orange-500"
-                @click="removeClick(product)"
-                v-if="checkItem(product)"
-              ></i>
-              <i
-                v-else
-                @click="handleClick(product)"
-                class="fa-regular fa-heart text-2xl"
-                :class="{ 'text-black': theme }"
-              ></i>
-            </p>
-          </div>
-          <div class="">
-            <RouterLink :to="`/products/${product.id}`">
-              <h5 class="text-base hover:underline">{{ product.name }}</h5>
-            </RouterLink>
-            <p class="text-red-600 my-2">
-              ${{ product.price * 0.85 }}
-              <span class="text-neutral-400 line-through ml-2"
-                >${{ product.price }}</span
+          <div class="flex flex-col items-center text-center">
+            <div class="relative mb-4">
+              <RouterLink :to="`/products/${product._id}`">
+                <img
+                  :src="product.image"
+                  :alt="product.name"
+                  class="object-cover w-[270px] h-[250px]"
+                />
+              </RouterLink>
+              <!-- <p
+                class="flex justify-center items-center absolute top-4 right-[35px] w-[36px] h-[36px] bg-white rounded-full hover:opacity-70 cursor-pointer"
               >
-            </p>
-            <ul>
-              <template v-for="index in 5">
                 <i
-                  v-if="index <= product.star"
-                  key="index"
-                  class="fa-solid fa-star text-red-600"
+                  class="fa-solid fa-heart text-2xl text-orange-500"
+                  @click="removeClick(product)"
+                  v-if="checkItem(product)"
                 ></i>
-                <i v-else class="fa-regular fa-star"></i>
-              </template>
-              <span>({{ product.soldQuantity }})</span>
-            </ul>
+                <i
+                  v-else
+                  @click="handleClick(product)"
+                  class="fa-regular fa-heart text-2xl"
+                  :class="{ 'text-black': theme }"
+                ></i>
+              </p> -->
+              <p
+                class="flex justify-center items-center absolute top-4 right-[-10px] text-sm w-[80px] h-[18px] bg-red-600 hover:opacity-70 cursor-pointer"
+              >
+                <span
+                  v-if="checkItem(product)"
+                  @click="removeClick(product)"
+                  class="text-white"
+                  >Liked
+                  <i class="fa-solid fa-check"></i>
+                </span>
+                <span
+                  v-else
+                  @click="handleClick(product)"
+                  class="text-white"
+                  :class="{ 'text-black': theme }"
+                  >Like</span
+                >
+              </p>
+            </div>
+            <div class="">
+              <RouterLink :to="`/products/${product.id}`">
+                <h5 class="text-base hover:underline">{{ product.name }}</h5>
+              </RouterLink>
+              <p class="text-red-600 my-2">
+                ${{ product.price * 0.85 }}
+                <span class="text-neutral-400 line-through ml-2"
+                  >${{ product.price }}</span
+                >
+              </p>
+              <ul>
+                <template v-for="index in 5">
+                  <i
+                    v-if="index <= product.star"
+                    key="index"
+                    class="fa-solid fa-star text-red-600"
+                  ></i>
+                  <i v-else class="fa-regular fa-star"></i>
+                </template>
+                <span>({{ product.soldQuantity }})</span>
+              </ul>
+            </div>
+            <button
+              class="bg-orange-500 text-white py-2 px-7 mt-2 rounded hover:opacity-60"
+              @click="addToCart(product)"
+            >
+              Add to cart
+            </button>
           </div>
         </article>
       </template>

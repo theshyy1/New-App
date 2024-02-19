@@ -125,9 +125,7 @@ const handleLogout = async () => {
                       />
                       <p class="text-sm w-[180px]">{{ item.name }}</p>
                     </div>
-                    <span class="text-red-500 text-sm"
-                      >${{ item.newPrice }}</span
-                    >
+                    <span class="text-red-500 text-sm">${{ item.price }}</span>
                   </RouterLink>
                 </li>
                 <div class="">

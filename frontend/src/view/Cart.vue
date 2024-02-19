@@ -5,6 +5,7 @@ import { updateUserAPI } from "../services/http";
 import { toast } from "vue3-toastify";
 import { RouterLink } from "vue-router";
 import { getNewestPrice } from "../ultil";
+import Swal from "sweetalert2";
 
 const {
   userState: { user },
@@ -92,8 +93,15 @@ const handleIncrease = async (product) => {
 
 const removeItem = async (product) => {
   const index = user.cart.findIndex((item) => item.id == product.id);
-  const confirm = window.confirm("Are you sure to remove this item?");
-  if (!confirm) return;
+  const result = await Swal.fire({
+    title: "Bạn có chắc chắn muốn xoá không?",
+    text: "Bạn cần đăng nhập để thêm sản phẩm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Đăng nhập",
+    cancelButtonText: "Hủy bỏ",
+  });
+  if (!result.isConfirmed) return;
   user.cart.splice(index, 1);
   await updateUserAPI(user);
 };

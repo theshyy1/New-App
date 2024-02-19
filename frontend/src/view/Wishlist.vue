@@ -102,7 +102,7 @@ const handleDelete = async (product) => {
           </p>
           <span
             @click="addToCart(product)"
-            class="absolute w-[98%] text-center h-[41px] leading-[41px] text-sm cursor-pointer top-[84%] left-0 bg-black text-white"
+            class="absolute w-[98%] text-center h-[41px] leading-[41px] text-sm cursor-pointer top-[84%] left-0 hover:bg-black text-white"
             ><i class="fa-solid fa-cart-shopping"></i> Add to cart</span
           >
         </div>
