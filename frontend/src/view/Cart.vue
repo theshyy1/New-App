@@ -95,10 +95,9 @@ const removeItem = async (product) => {
   const index = user.cart.findIndex((item) => item.id == product.id);
   const result = await Swal.fire({
     title: "Bạn có chắc chắn muốn xoá không?",
-    text: "Bạn cần đăng nhập để thêm sản phẩm",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonText: "Đăng nhập",
+    confirmButtonText: "Xác nhận",
     cancelButtonText: "Hủy bỏ",
   });
   if (!result.isConfirmed) return;

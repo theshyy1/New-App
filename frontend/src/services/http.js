@@ -16,6 +16,9 @@ export const signinAPI = (user) => instance.post("/auth/login", user);
 
 export const updateUserAPI = (user) => instance.put(`/users/${user._id}`, user);
 
+export const updateProductAPI = (product, body) =>
+  instance.put(`/products/${product._id}`, body);
+
 export const getProductAPI = (id) => instance.get(`/products/${id}`);
 
 export const addProductAPI = (product) =>
@@ -24,3 +27,7 @@ export const addProductAPI = (product) =>
 export const deleteProductAPI = (id) => instance.delete(`/products/${id}`);
 
 export const getAllUsersAPI = () => instance.get(`/users`);
+
+export const addBillAPI = (products) => instance.post("bills/create", products);
+
+export const getHistoryBuy = (id) => instance.get(`/bills/history/${id}`);

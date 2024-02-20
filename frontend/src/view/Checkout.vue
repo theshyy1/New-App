@@ -2,10 +2,12 @@
 import { computed, ref } from "vue";
 import { useAuthStore } from "../store/auth";
 import { toast } from "vue3-toastify";
-import { updateUserAPI } from "../services/http";
+import { updateUserAPI, updateProductAPI, addBillAPI } from "../services/http";
 import { useRouter } from "vue-router";
 import { getNewestPrice } from "../ultil";
 import { useProductStore } from "../store";
+import Swal from "sweetalert2";
+
 const router = useRouter();
 const { userState } = useAuthStore();
 const store = useProductStore();
@@ -51,11 +53,43 @@ const totalPriceItems = computed(() => {
 
 const handleCheckout = async () => {
   if (!userState.user.cart.length > 0) return;
-  const confirm = window.confirm("Bạn có chắc muốn thanh toán không?");
-  if (confirm) {
-    userState.user.cart = [];
-    payFee.value = 0;
+  const result = await Swal.fire({
+    title: "Bạn có chắc muốn thanh toán chứ?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Thanh toán",
+    cancelButtonText: "Hủy bỏ",
+  });
+  if (result.isConfirmed) {
+    for (let product of userState.user.cart) {
+      const updatedSoldQuantity = product.quantity + product.soldQuantity;
+      const updatedQuantityInStock = product.quantityInStock - product.quantity;
+
+      // check quantity before update
+      if (updatedQuantityInStock >= 0) {
+        // update product
+        await updateProductAPI(product, {
+          soldQuantity: updatedSoldQuantity,
+          quantityInStock: updatedQuantityInStock,
+        });
+      } else {
+        console.error(`Quantity of ${product.name} is not enough`);
+      }
+    }
+    const timeCreated = new Date(Date.now());
+    const newBill = {
+      user_id: userState.user._id,
+      products: userState.user.cart.map((item) => item._id),
+      totalPrice: userState.user.cart.reduce(
+        (total, num) => total + num.quantity * num.price,
+        0
+      ),
+      createAt: timeCreated.toUTCString(),
+    };
+    await addBillAPI(newBill);
     await updateUserAPI(userState.user);
+    payFee.value = 0;
+    userState.user.cart = [];
     await router.push({ path: "/" });
     toast.success("Checkout Done", {
       autoClose: 1500,

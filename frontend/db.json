@@ -5,7 +5,7 @@
       "name": "HAVIT HV-G92 Gamepad",
       "price": 120,
       "star": 4,
-      "soldQuantity": 88,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/271/250",
       "quantityInStock": 50
     },
@@ -14,7 +14,7 @@
       "name": "AK-900 Wired Keyboard",
       "price": 960,
       "star": 5,
-      "soldQuantity": 75,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/272/250",
       "quantityInStock": 50
     },
@@ -23,7 +23,7 @@
       "name": "IPS LCD Gaming Monitor",
       "price": 370,
       "star": 4,
-      "soldQuantity": 99,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/273/250",
       "quantityInStock": 30
     },
@@ -32,7 +32,7 @@
       "name": "S-Series Comfort Chair",
       "price": 375,
       "star": 3,
-      "soldQuantity": 88,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/274/250",
       "quantityInStock": 58
     },
@@ -41,7 +41,7 @@
       "name": "S-Series Comfort Chair 1",
       "price": 300,
       "star": 2,
-      "soldQuantity": 28,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/275/250",
       "quantityInStock": 47
     },
@@ -50,7 +50,7 @@
       "name": "Mac M1",
       "price": 1099,
       "star": 5,
-      "soldQuantity": 88,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/271/251",
       "quantityInStock": 50
     },
@@ -59,7 +59,7 @@
       "name": "Keyboard Profestional",
       "price": 960,
       "star": 3,
-      "soldQuantity": 75,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/272/251",
       "quantityInStock": 70
     },
@@ -68,7 +68,7 @@
       "name": "Super Mouse",
       "price": 379,
       "star": 4,
-      "soldQuantity": 99,
+      "soldQuantity": 0,
       "image": "https://picsum.photos/273/251",
       "quantityInStock": 28
     }
@@ -113,6 +113,16 @@
           "image": "https://picsum.photos/272/250",
           "quantityInStock": 50,
           "quantity": 1
+        }
+      ],
+      "historyBuy": [
+        {
+          "id": 1,
+          "products": [
+            { "id": 1, "name": "S12", "price": 100, "quantity": 2 },
+            { "id": 3, "name": "S13", "price": 200, "quantity": 3 }
+          ],
+          "totalPrice": 1000
         }
       ]
     },

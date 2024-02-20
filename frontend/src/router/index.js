@@ -62,6 +62,19 @@ const routes = [
         component: () => import("../view/Checkout.vue"),
         meta: { title: "Checkout" },
       },
+      {
+        path: "history",
+        name: "History Buy",
+        component: () => import("../view/HistoryBuy.vue"),
+        meta: { title: "History" },
+        children: [
+          {
+            path: ":id",
+            name: "Detail Buy",
+            component: () => import("../view/DetailHistoryBuy.vue"),
+          },
+        ],
+      },
     ],
   },
   {
@@ -155,6 +168,8 @@ router.beforeEach(async (to, from, next) => {
       to.name === "Cart" ||
       to.name === "Wishlist" ||
       to.name === "Dashboard" ||
+      to.name === "History Buy" ||
+      to.name === "Detail Buy" ||
       to.path.includes("/admin")
     ) {
       try {

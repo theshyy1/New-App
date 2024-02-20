@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import { ref } from "vue";
 import { useProductStore } from "../store";
 import { useAuthStore } from "../store/auth";
@@ -175,10 +175,10 @@ const handleLogout = async () => {
                   </li>
                   <li>
                     <RouterLink
-                      to="/checkout"
+                      to="/history"
                       class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
                     >
-                      <i class="fa-solid fa-ban mr-3"></i>My Checkout
+                      <i class="fa-solid fa-ban mr-3"></i>My history buy
                     </RouterLink>
                   </li>
                   <li>
