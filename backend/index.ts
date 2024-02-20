@@ -6,6 +6,7 @@ import authenticateToken from "./middleware/authToken";
 import productRoute from "./router/product.route";
 import authRoute from "./router/auth.route";
 import userRoute from "./router/user.route";
+import billRoute from "./router/bill.route";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -24,6 +25,7 @@ mongoose
 app.use("/v1/products", authenticateToken, productRoute);
 app.use("/v1/auth", authRoute);
 app.use("/v1/users", authenticateToken, userRoute);
+app.use("/v1/bills", billRoute);
 
 app.listen(port, () => {
   console.log("listening on port " + port);
