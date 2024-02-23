@@ -15,6 +15,7 @@ const {
   userState: { user },
 } = useAuthStore();
 const store = useProductStore();
+const productStore = useProductStore();
 
 // Pagination
 const limit = 4;
@@ -91,18 +92,29 @@ const checkItem = (product) => {
 };
 
 // Add to cart
-
 const addToCart = async (product) => {
-  const index = user.cart.findIndex((item) => item._id === product._id);
-  if (index !== -1) {
-    user.cart[index].quantity++;
+  if (!user) {
+    const result = await Swal.fire({
+      title: "Yêu cầu đăng nhập",
+      text: "Bạn cần đăng nhập để thêm sản phẩm",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đăng nhập",
+      cancelButtonText: "Hủy bỏ",
+    });
+    if (result.isConfirmed) {
+      router.push({ path: "Signin" });
+    }
   } else {
-    user.cart.push({ ...product, quantity: 1 });
-  }
+    const index = user?.cart.findIndex((item) => item._id === product._id);
+    if (index !== -1) {
+      user.cart[index].quantity++;
+    } else {
+      user.cart.push({ ...product, quantity: 1 });
+    }
 
-  const res = await updateUserAPI(user);
-  if (res) {
-    toast.success("Added x1", {
+    await updateUserAPI(user);
+    toast.success("Added to cart !!", {
       autoClose: 1500,
       position: "bottom-right",
       theme: "colored",
@@ -136,8 +148,9 @@ const sortyByRate = createSortFunction("star");
 // Sorted with icons
 const show = reactive({
   name: true,
-  price: true,
+  price: false,
   star: false,
+  all: false,
 });
 </script>
 
@@ -212,7 +225,7 @@ const show = reactive({
   <section class="container my-[60px]">
     <div class="mb-[40px]">
       <section class="flex items-center mb-6">
-        <span class="block w-5 h-[40px] rounded-md bg-orange-500 mr-2"></span>
+        <span class="block w-5 h-[40px] rounded-md bg-primary mr-2"></span>
         <p class="text-orange-700">Today’s</p>
       </section>
       <section class="flex justify-between items-center">
@@ -232,13 +245,13 @@ const show = reactive({
       </section>
     </div>
     <ul
-      class="flex space-x-5 items-center border-[1px] bg-neutral-200 py-2 px-3 my-6"
-      :class="{ 'text-black ': theme }"
+      class="flex space-x-5 items-center py-2 px-3 my-6"
+      :class="[theme ? 'bg-[#5b5959]' : 'bg-neutral-200']"
     >
       <span class="ml-5">Sort by</span>
       <li @click="show.name = !show.name">
         <button
-          class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
+          class="px-5 py-3 bg-white text-black hover:bg-primary hover:text-white"
           @click="sortByName"
           transition="fade"
         >
@@ -250,7 +263,7 @@ const show = reactive({
       <li @click="show.price = !show.price">
         <button
           @click="sortByPrice"
-          class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
+          class="px-5 py-3 bg-white text-black hover:bg-primary hover:text-white"
         >
           Product's price
           <i v-if="show.price" class="fa-solid fa-chevron-up"></i>
@@ -260,7 +273,7 @@ const show = reactive({
       <li @click="show.star = !show.star">
         <button
           @click="sortyByRate"
-          class="px-5 py-3 bg-white text-black hover:bg-orange-500 hover:text-white"
+          class="px-5 py-3 bg-white text-black hover:bg-primary hover:text-white"
         >
           Rating
           <i v-if="show.star" class="fa-solid fa-chevron-up"></i>
@@ -275,6 +288,7 @@ const show = reactive({
           v-for="product in productFilters.products"
           :key="product.id"
           class="shadow-md py-4 px-2"
+          :class="[productStore.darkTheme ? 'bg-[#171010]' : 'bg-white']"
         >
           <div class="flex flex-col items-center text-center">
             <div class="relative mb-4">
@@ -285,23 +299,8 @@ const show = reactive({
                   class="object-cover w-[270px] h-[250px]"
                 />
               </RouterLink>
-              <!-- <p
-                class="flex justify-center items-center absolute top-4 right-[35px] w-[36px] h-[36px] bg-white rounded-full hover:opacity-70 cursor-pointer"
-              >
-                <i
-                  class="fa-solid fa-heart text-2xl text-orange-500"
-                  @click="removeClick(product)"
-                  v-if="checkItem(product)"
-                ></i>
-                <i
-                  v-else
-                  @click="handleClick(product)"
-                  class="fa-regular fa-heart text-2xl"
-                  :class="{ 'text-black': theme }"
-                ></i>
-              </p> -->
               <p
-                class="flex justify-center items-center absolute top-4 right-[-10px] text-sm w-[80px] h-[18px] bg-red-600 hover:opacity-70 cursor-pointer"
+                class="flex justify-center items-center absolute top-1 rotate-[25deg] right-[-10px] text-sm shadow-md w-[80px] h-[20px] bg-red-500 hover:opacity-70 cursor-pointer"
               >
                 <span
                   v-if="checkItem(product)"
@@ -342,7 +341,7 @@ const show = reactive({
               </ul>
             </div>
             <button
-              class="bg-orange-500 text-white py-2 px-7 mt-2 rounded hover:opacity-60"
+              class="bg-primary text-white py-2 px-7 mt-2 rounded hover:opacity-60"
               @click="addToCart(product)"
             >
               Add to cart
@@ -381,9 +380,10 @@ const show = reactive({
         </ul>
       </nav>
     </div>
-    <div class="">
+    <div class="" @click="show.name = !show.name">
       <button
-        class="block mx-auto mt-[60px] w-[234px] bg-orange-500 text-white rounded py-4 hover:opacity-40"
+        class="block mx-auto mt-[60px] w-[234px] bg-primary text-white rounded py-4 hover:opacity-40"
+        @click="sortByName"
       >
         View All Products
       </button>

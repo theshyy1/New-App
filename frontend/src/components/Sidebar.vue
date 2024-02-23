@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
+import { sidebarOptions } from "../constraints";
 import Swal from "sweetalert2";
 
 const {
@@ -44,44 +45,17 @@ const handleLogout = async () => {
         >
       </div>
     </li>
-    <li class="">
+    <li v-for="(option, index) in sidebarOptions" :key="index">
       <RouterLink
-        class="py-5 px-5 border-b-[1px] border-gray-200 hover:bg-orange-500 block"
-        to="/admin/dashboard"
-        ><i class="fa-solid fa-house mr-3"></i>Home</RouterLink
+        :to="option.baseUrl"
+        class="py-5 px-5 border-b-[1px] border-gray-200 hover:bg-primary block"
       >
-    </li>
-    <li class="">
-      <RouterLink
-        class="py-5 px-5 border-b-[1px] border-gray-200 hover:bg-orange-500 block"
-        to="/admin/notifications"
-        ><i class="fa-solid fa-bell mr-3"></i>Notifications</RouterLink
-      >
-    </li>
-    <li class="">
-      <RouterLink
-        class="block py-5 px-5 border-b-[1px] border-gray-200 hover:bg-orange-500"
-        to="/admin/products"
-        ><i class="fa-solid fa-layer-group mr-3"></i>Products</RouterLink
-      >
-    </li>
-    <li>
-      <RouterLink
-        class="py-5 px-5 border-b-[1px] border-gray-200 hover:bg-orange-500 block"
-        to="/admin/users"
-        ><i class="fa-regular fa-user mr-3"></i>User</RouterLink
-      >
-    </li>
-    <li>
-      <RouterLink
-        class="py-5 px-5 border-b-[1px] border-gray-200 hover:bg-orange-500 block"
-        to="/admin/setting"
-        ><i class="fa-solid fa-gear mr-3"></i>Setting</RouterLink
-      >
+        <i :class="option.icon"></i> {{ option.title }}
+      </RouterLink>
     </li>
     <li @click="handleLogout">
       <p
-        class="py-5 px-5 border-b-[1px] cursor-pointer border-gray-200 hover:bg-orange-500 block"
+        class="py-5 px-5 border-b-[1px] cursor-pointer border-gray-200 hover:bg-primary block"
       >
         <i class="fa-solid fa-right-from-bracket mr-3"></i>Logout
       </p>

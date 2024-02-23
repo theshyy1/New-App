@@ -5,7 +5,9 @@ import { reactive } from "vue";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 import { signUpSchema } from "../ultil/schema";
+import { useProductStore } from "../store";
 const router = useRouter();
+const productStore = useProductStore();
 
 const userLogin = reactive({
   name: "",
@@ -55,7 +57,7 @@ const handleLogin = async () => {
         <input
           type="text"
           placeholder="Name"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] border-neutral-400 text-black px-3 py-3"
           v-model="userLogin.name"
         />
         <span
@@ -66,7 +68,7 @@ const handleLogin = async () => {
         <input
           type="text"
           placeholder="Email or Phone number"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] text-black px-3 border-neutral-400 py-3"
           v-model="userLogin.email"
         />
         <span
@@ -78,7 +80,7 @@ const handleLogin = async () => {
           type="password"
           placeholder="Password"
           v-model="userLogin.password"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] text-black px-3 border-neutral-400 py-3"
         />
         <span
           v-if="errors.password"
@@ -89,7 +91,7 @@ const handleLogin = async () => {
           type="password"
           placeholder="Confirm Password"
           v-model="userLogin.confirm_password"
-          class="block w-full outline-none border-b-[1px] border-neutral-400 py-3"
+          class="block w-full outline-none border-b-[1px] text-black px-3 border-neutral-400 py-3"
         />
         <span
           v-if="errors.confirm_password"
@@ -97,13 +99,14 @@ const handleLogin = async () => {
           >{{ errors.confirm_password }}</span
         >
         <button
-          class="w-full bg-orange-500 rounded text-white py-4 my-4 hover:opacity-40"
+          class="w-full bg-primary rounded text-white py-4 my-4 hover:opacity-40"
         >
           Create Account
         </button>
       </form>
       <button
         class="w-full bg-transparent rounded text-black border-[1px] border-black py-4 my-4 hover:opacity-40"
+        :class="{ 'border-white border-2 text-white': productStore.darkTheme }"
       >
         <RouterLink to="/signin">
           <span><i class="fa-brands fa-google"></i></span>

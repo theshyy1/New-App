@@ -3,7 +3,10 @@ import { RouterLink, useRoute } from "vue-router";
 import { ref } from "vue";
 import { useProductStore } from "../store";
 import { useAuthStore } from "../store/auth";
+import { popupOptions, headerOptions } from "../constraints";
 import Swal from "sweetalert2";
+import AdHeader from "./AdHeader.vue";
+import "../styles/transition.css";
 
 const productStore = useProductStore();
 const { userState, logout } = useAuthStore();
@@ -30,44 +33,21 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <header
-    class="bg-white text-black"
-    :class="{ 'bg-[#1c1b1e] text-white': productStore.darkTheme }"
+  <AdHeader />
+  <section
+    class="border-b-[1px] text-white border-neutral-500"
+    :class="[productStore.darkTheme ? 'bg-[#1c1b1e]' : 'bg-primary']"
   >
-    <div class="container py-[14px] flex justify-between items-center">
-      <span></span>
-      <p class="text-sm">
-        Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-        <span class="border-b-1 border-white ml-4">ShopNow</span>
-      </p>
-      <p class="text-sm">
-        English
-        <span class="ml-2 text-xl"
-          ><i class="fa-solid fa-chevron-down"></i
-        ></span>
-      </p>
-    </div>
-  </header>
-  <section class="border-b-[1px] bg-orange-500 text-white border-neutral-500">
     <div class="container flex justify-between items-center pt-9 mb-4">
       <RouterLink to="/">
         <h3 class="text-2xl font-bold">Exclusive</h3>
       </RouterLink>
       <nav>
         <ul class="flex justify-center items-center space-x-6">
-          <li><RouterLink to="/" class="hover:underline">Home</RouterLink></li>
-          <li>
-            <RouterLink to="/contact" class="hover:underline"
-              >Contact</RouterLink
-            >
-          </li>
-          <li>
-            <RouterLink to="/about" class="hover:underline">About</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/checkout" class="hover:underline"
-              >Checkout</RouterLink
-            >
+          <li v-for="(option, index) in headerOptions" :key="index">
+            <RouterLink :to="option.url" class="hover:underline hover:italic">
+              {{ option.title }}
+            </RouterLink>
           </li>
         </ul>
       </nav>
@@ -89,14 +69,14 @@ const handleLogout = async () => {
         </div>
         <p class="space-x-4 text-2xl">
           <RouterLink to="/wishlist" class="hover-trigger group relative">
-            <i class="fa-regular fa-heart hover:text-red-500"></i>
+            <i class="fa-regular fa-heart hover:text-sky-500"></i>
             <span
               class="hidden group-hover:block absolute top-[-40px] right-[-20px] text-[12px] z-[2] text-black bg-white rounded px-2"
               >Wishlist</span
             >
             <span
               v-if="userState.user?.careItems?.length > 0"
-              class="flex justify-center absolute top-[-7px] right-[-10px] text-sm w-5 h-5 rounded-full bg-orange-800 text-white"
+              class="flex justify-center absolute top-[-7px] right-[-10px] text-sm w-5 h-5 rounded-full bg-white text-red-500"
               >{{ userState.user?.careItems.length }}</span
             >
           </RouterLink>
@@ -130,7 +110,7 @@ const handleLogout = async () => {
                 </li>
                 <div class="">
                   <button
-                    class="block ml-auto py-2 px-3 bg-orange-500 text-white hover:opacity-60"
+                    class="block ml-auto py-2 px-3 bg-primary text-white hover:opacity-60"
                   >
                     View Cart
                   </button>
@@ -141,7 +121,14 @@ const handleLogout = async () => {
           </RouterLink>
         </p>
       </div>
-      <button @click="productStore.toggleTheme">Theme</button>
+      <button class="" @click="productStore.toggleTheme">
+        <span v-if="productStore.darkTheme">
+          <i class="fa-regular fa-lightbulb"></i>
+        </span>
+        <span v-else>
+          <i class="fa-solid fa-lightbulb"></i>
+        </span>
+      </button>
 
       <div class="text-xl">
         <span v-if="userState.isLoggin" class="flex items-center space-x-2">
@@ -149,79 +136,46 @@ const handleLogout = async () => {
           <div class="text-base">
             Hi,
             <RouterLink
-              to="/profile"
-              class="text-[#0a465e] shadow-sm cursor-pointer hover-trigger group relative"
+              to="/"
+              class="text-white hover:text-sky-600 shadow-sm cursor-pointer hover-trigger group relative"
             >
               {{ userState.user.name }} !!
               <Transition name="fade">
                 <ul
                   class="hidden group-hover:block absolute top-[20px] right-[0px] rounded z-[2] text-sm py-2 px-3 space-y-2 w-[200px] bg-gradient-to-l from-transparent to-neutral-400 z-100"
                 >
-                  <li>
+                  <li v-for="(option, index) in popupOptions" :key="index">
                     <RouterLink
-                      to="/profile"
+                      :to="option.url"
                       class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
                     >
-                      <i class="fa-solid fa-circle-user"></i> Manage My Account
+                      <i :class="option.icon"></i> {{ option.title }}
                     </RouterLink>
                   </li>
-                  <li>
-                    <RouterLink
-                      to="/cart"
-                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                    >
-                      <i class="fa-solid fa-bag-shopping mr-3"></i>My Order
-                    </RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink
-                      to="/history"
-                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                    >
-                      <i class="fa-solid fa-ban mr-3"></i>My history buy
-                    </RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink
-                      to=""
-                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                    >
-                      <i class="fa-regular fa-star mr-3"></i>My Reviews
-                    </RouterLink>
-                  </li>
-                  <li @click="handleLogout">
-                    <RouterLink
-                      to="/logout"
-                      class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
-                    >
-                      <i class="fa-solid fa-right-from-bracket mr-3"></i>Logout
-                    </RouterLink>
+                  <li
+                    class="block p-2 hover:bg-orange-500 hover:text-white rounded text-black"
+                    @click="handleLogout"
+                  >
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
                   </li>
                 </ul>
               </Transition></RouterLink
             >
           </div>
         </span>
-        <span v-else>
+        <span class="space-x-2" v-else>
           <RouterLink
-            class="text-base border-[1px] border-white rounded py-1 px-2"
+            class="text-base border-[1px] border-white text-white py-2 px-7 mt-2 rounded hover:opacity-60"
             to="/signin"
             >Sign in</RouterLink
+          >
+          <RouterLink
+            class="text-base border-[1px] border-white text-white py-2 px-7 mt-2 rounded hover:opacity-60"
+            to="/signup"
+            >Sign up</RouterLink
           >
         </span>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 2s;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

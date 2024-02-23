@@ -19,7 +19,7 @@ const handleClose = () => {
 
 <template>
   <div
-    class="bg-teal-200 shadow-sm rounded h-[440px] w-[800px] text-center p-4"
+    class="bg-[#009fff] text-white shadow-sm rounded h-[440px] w-[800px] text-center p-4"
   >
     <div class="relative">
       <h1 class="text-3xl text-red-600">Detail Exchange</h1>
@@ -62,7 +62,7 @@ const handleClose = () => {
           </div>
         </li>
       </ul>
-      <p class="text-right mr-3 text-xl text-sky-500 shadow-sm">
+      <p class="text-right mr-3 text-xl text-white shadow-sm">
         Total price:
         <span class="italic"
           >${{ buyStore.historyDetail?.totalPrice || "NaN" }}</span

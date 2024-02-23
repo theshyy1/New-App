@@ -30,7 +30,7 @@ const handleClickBack = () => {
     </h1>
     <p class="my-8">Your visited page not found. You may go home page.</p>
     <button
-      class="w-[200px] py-3 px-8 bg-orange-500 text-white rounded hover:opacity-60"
+      class="w-[200px] py-3 px-8 bg-primary text-white rounded hover:opacity-60"
       @click="handleClickBack"
     >
       Back home

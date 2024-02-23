@@ -66,12 +66,12 @@ const handleDeleteUser = (id) => {
               class="absolute top-[40px] right-[0] w-[90px] shadow-sm text-sm border-[1px] bg-white flex flex-col"
             >
               <button
-                class="text-black hover:bg-orange-500 hover:text-white px-2 py-1"
+                class="text-black hover:bg-primary hover:text-white px-2 py-1"
               >
                 <i class="fa-solid fa-hand"></i> Update
               </button>
               <button
-                class="text-black hover:bg-orange-500 hover:text-white px-2 py-1"
+                class="text-black hover:bg-primary hover:text-white px-2 py-1"
                 @click="handleDeleteUser(user.id)"
               >
                 <i class="fa-solid fa-xmark"></i> Delete

@@ -68,13 +68,21 @@ const handleLogin = async () => {
           :class="{ 'text-white': store.darkTheme }"
           >{{ errors.password }}</span
         >
-        <p class="my-4 text-neutral-600">
+        <p
+          class="my-4 text-neutral-600"
+          :class="{ 'text-white': store.darkTheme }"
+        >
           Have you an account?
-          <RouterLink to="/signup" class="underline">Register</RouterLink>
+          <RouterLink
+            to="/signup"
+            class="underline"
+            :class="{ 'text-primary': store.darkTheme }"
+            >Register</RouterLink
+          >
         </p>
         <p class="my-4 text-red-600">Forget password</p>
         <button
-          class="w-full bg-orange-500 rounded text-white py-4 my-4 hover:opacity-40"
+          class="w-full bg-primary rounded text-white py-4 my-4 hover:opacity-40"
         >
           Login
         </button>

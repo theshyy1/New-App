@@ -86,6 +86,7 @@ const handleDelete = async (product) => {
         v-for="(product, index) in user.careItems"
         :key="product._id"
         class="shadow-md py-4 px-4"
+        :class="[store.darkTheme ? 'bg-[#171010]' : 'bg-white']"
       >
         <div class="mb-4 relative">
           <RouterLink :to="`/products/${product._id}`">

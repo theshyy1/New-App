@@ -85,7 +85,7 @@ const handleSubmit = async () => {
         </div>
 
         <button
-          class="py-3 px-5 my-3 w-[120px] bg-orange-500 hover:opacity-60 text-white rounded"
+          class="py-3 px-5 my-3 w-[120px] bg-primary hover:opacity-60 text-white rounded"
         >
           ADD
         </button>

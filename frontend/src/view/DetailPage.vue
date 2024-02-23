@@ -1,10 +1,20 @@
 <script setup>
-import { getProductAPI } from "../services/http";
+import { getProductAPI, updateUserAPI } from "../services/http";
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useProductStore } from "../store";
+import { useAuthStore } from "../store/auth";
+import Swal from "sweetalert2";
+import { toast } from "vue3-toastify";
 const route = useRoute();
+const router = useRouter();
 
 const currentProduct = ref(null);
+
+const {
+  userState: { user },
+} = useAuthStore();
+const store = useProductStore();
 
 onMounted(() => {
   getProductAPI(route.params.id).then(
@@ -22,6 +32,89 @@ function decreaseQuantity() {
     quantity.value--;
   }
 }
+
+// Add to wishlist
+const handleClick = async (product) => {
+  const index =
+    user && user?.careItems.findIndex((item) => item._id === product._id);
+  if (index === -1) {
+    user.careItems.unshift(product);
+  }
+
+  if (!user) {
+    const result = await Swal.fire({
+      title: "Yêu cầu đăng nhập",
+      text: "Bạn cần đăng nhập để thêm sản phẩm",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đăng nhập",
+      cancelButtonText: "Hủy bỏ",
+    });
+    if (result.isConfirmed) {
+      router.push({ path: "Signin" });
+    }
+  } else {
+    await updateUserAPI(user);
+    toast.success("Added item to Wishlist !!", {
+      autoClose: 1500,
+      position: "bottom-right",
+      theme: "colored",
+    });
+  }
+};
+
+// remove from wishlist
+const removeClick = async (product) => {
+  const index = user.careItems.findIndex((item) => item._id === product._id);
+  if (index !== -1) {
+    user.careItems.splice(index, 1);
+  }
+
+  await updateUserAPI(user);
+  toast.error("Removed item from Wishlist", {
+    autoClose: 1500,
+    position: "bottom-right",
+    theme: "colored",
+  });
+};
+
+// check item in wishlist
+const checkItem = (product) => {
+  return (
+    user && user.careItems.findIndex((item) => item._id === product._id) !== -1
+  );
+};
+
+// Add to cart
+const addToCart = async (product) => {
+  if (!user) {
+    const result = await Swal.fire({
+      title: "Yêu cầu đăng nhập",
+      text: "Bạn cần đăng nhập để thêm sản phẩm",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đăng nhập",
+      cancelButtonText: "Hủy bỏ",
+    });
+    if (result.isConfirmed) {
+      router.push({ path: "Signin" });
+    }
+  } else {
+    const index = user?.cart.findIndex((item) => item._id === product._id);
+    if (index !== -1) {
+      user.cart[index].quantity++;
+    } else {
+      user.cart.push({ ...product, quantity: 1 });
+    }
+
+    await updateUserAPI(user);
+    toast.success("Added to cart !!", {
+      autoClose: 1500,
+      position: "bottom-right",
+      theme: "colored",
+    });
+  }
+};
 </script>
 
 <template>
@@ -58,7 +151,7 @@ function decreaseQuantity() {
           <span class="text-green-700">In Stock</span>
         </ul>
         <span class="block text-2xl font-semibold mb-6"
-          >${{ currentProduct?.newPrice * quantity }}</span
+          >${{ currentProduct?.price }}</span
         >
         <p class="text-sm max-w-[440px] pb-6 border-b-[1px] border-black">
           PlayStation 5 Controller Skin High quality vinyl with air channel
@@ -81,7 +174,7 @@ function decreaseQuantity() {
             S
           </button>
           <button
-            class="border-[1px] rounded text-sm p-2 px-3 bg-orange-500 text-white"
+            class="border-[1px] rounded text-sm p-2 px-3 bg-primary text-white"
           >
             M
           </button>
@@ -101,13 +194,23 @@ function decreaseQuantity() {
             <span class="block px-3" @click="decreaseQuantity"> + </span>
           </div>
           <button
-            class="bg-orange-500 text-white py-2 px-7 rounded hover:opacity-60"
+            class="bg-primary text-white py-2 px-7 rounded hover:opacity-60"
+            @click="addToCart(currentProduct)"
           >
             Buy now
           </button>
-          <span class="border-[1px] border-black rounded py-1 px-2">
-            <i class="fa-regular fa-heart text-2xl"></i>
-          </span>
+          <p class="border-[1px] border-black rounded py-1 px-2">
+            <i
+              class="fa-solid fa-heart text-2xl text-orange-500"
+              @click="removeClick(currentProduct)"
+              v-if="checkItem(currentProduct)"
+            ></i>
+            <i
+              v-else
+              @click="handleClick(currentProduct)"
+              class="fa-regular fa-heart text-2xl"
+            ></i>
+          </p>
         </div>
         <div class="border-[1px] border-black rounded w-[370px] p-4">
           <div class="flex items-center mb-2 border-b-[1px] border-black pb-3">

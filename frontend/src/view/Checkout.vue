@@ -248,14 +248,14 @@ const handleCheckout = async () => {
               @keyup.enter="getPriceDiscount"
             />
             <button
-              class="w-[210px] py-4 ml-4 bg-orange-500 border-none text-white rounded hover:opacity-60"
+              class="w-[210px] py-4 ml-4 bg-primary border-none text-white rounded hover:opacity-60"
             >
               Apply Coupon
             </button>
           </div>
         </div>
         <button
-          class="w-[210px] py-4 ml-6 bg-orange-500 border-none text-white rounded hover:opacity-60"
+          class="w-[210px] py-4 ml-6 bg-primary border-none text-white rounded hover:opacity-60"
           @click="handleCheckout"
         >
           Place Order

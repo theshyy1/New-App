@@ -173,7 +173,7 @@ const removeItem = async (product) => {
           @keyup.enter="getPriceDiscount"
         />
         <button
-          class="w-[210px] py-4 ml-4 bg-orange-500 border-none text-white rounded hover:opacity-60"
+          class="w-[210px] py-4 ml-4 bg-primary border-none text-white rounded hover:opacity-60"
         >
           Apply Coupon
         </button>
@@ -202,7 +202,7 @@ const removeItem = async (product) => {
           </div>
           <RouterLink to="/checkout">
             <button
-              class="w-[260px] py-4 ml-4 bg-orange-500 border-none text-white rounded hover:opacity-60"
+              class="w-[260px] py-4 ml-4 bg-primary border-none text-white rounded hover:opacity-60"
               id="checkout-done"
             >
               Procees to checkout
