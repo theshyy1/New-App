@@ -29,7 +29,7 @@ const moveAllToBag = async () => {
   user.careItems = [];
 
   await updateUserAPI(user);
-  toast.success("Moved all to bag", {
+  toast.success("Đã thêm tất cả vào danh mục ưa thích", {
     autoClose: 1500,
     position: "bottom-right",
     theme: "colored",
@@ -45,7 +45,7 @@ const addToCart = async (product) => {
 
   const res = await updateUserAPI(user);
   if (res) {
-    toast.success("Added x1", {
+    toast.success("Đã được thêm vào danh mục ưa thích", {
       autoClose: 1500,
       position: "bottom-right",
       theme: "colored",
