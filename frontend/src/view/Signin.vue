@@ -12,6 +12,11 @@ const user = reactive({
   password: "anhtrung",
 });
 
+const user1 = reactive({
+  email: "anhtrung@gmail.com.vn",
+  password: "anhtrung1",
+});
+
 const errors = reactive({
   email: null,
   password: null,

@@ -255,7 +255,7 @@ const show = reactive({
           @click="sortByName"
           transition="fade"
         >
-          Product's name
+          Tên sản phẩm
           <i v-if="show.name" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -265,7 +265,7 @@ const show = reactive({
           @click="sortByPrice"
           class="px-5 py-3 bg-white text-black hover:bg-primary hover:text-white"
         >
-          Product's price
+          Giá cả
           <i v-if="show.price" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -275,7 +275,7 @@ const show = reactive({
           @click="sortyByRate"
           class="px-5 py-3 bg-white text-black hover:bg-primary hover:text-white"
         >
-          Rating
+          Lượt đánh giá
           <i v-if="show.star" class="fa-solid fa-chevron-up"></i>
           <i v-else class="fa-solid fa-chevron-down"></i>
         </button>
@@ -287,7 +287,7 @@ const show = reactive({
         <article
           v-for="product in productFilters.products"
           :key="product.id"
-          class="shadow-md py-4 px-2"
+          class="shadow-md py-4 px-2 hover:translate-y-1"
           :class="[productStore.darkTheme ? 'bg-[#171010]' : 'bg-white']"
         >
           <div class="flex flex-col items-center text-center">
@@ -300,13 +300,13 @@ const show = reactive({
                 />
               </RouterLink>
               <p
-                class="flex justify-center items-center absolute top-1 rotate-[25deg] right-[-10px] text-sm shadow-md w-[80px] h-[20px] bg-red-500 hover:opacity-70 cursor-pointer"
+                class="flex justify-center items-center absolute top-2 left-[-7px] text-sm shadow-md w-[100px] h-[20px] bg-red-500 hover:opacity-70 cursor-pointer"
               >
-                <span
+                <!-- <span
                   v-if="checkItem(product)"
                   @click="removeClick(product)"
                   class="text-white"
-                  >Liked
+                  >Đã yêu thích
                   <i class="fa-solid fa-check"></i>
                 </span>
                 <span
@@ -314,7 +314,10 @@ const show = reactive({
                   @click="handleClick(product)"
                   class="text-white"
                   :class="{ 'text-black': theme }"
-                  >Like</span
+                  >Yêu thích</span
+                > -->
+                <span class="text-white" :class="{ 'text-black': theme }"
+                  >Yêu thích</span
                 >
               </p>
             </div>
