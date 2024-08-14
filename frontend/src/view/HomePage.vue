@@ -18,7 +18,7 @@ const store = useProductStore();
 const productStore = useProductStore();
 
 // Pagination
-const limit = 4;
+const limit = 8;
 const currentPage = computed(() => {
   const page = parseInt(route.query.page) || 1;
   return page;
@@ -287,11 +287,11 @@ const show = reactive({
         <article
           v-for="product in productFilters.products"
           :key="product.id"
-          class="shadow-md py-4 px-2 hover:translate-y-1"
+          class="shadow-md border-2 bg-orange-300 border-orange-400 py-4 px-2 hover:translate-y-1"
           :class="[productStore.darkTheme ? 'bg-[#171010]' : 'bg-white']"
         >
-          <div class="flex flex-col items-center text-center">
-            <div class="relative mb-4">
+          <div class="">
+            <div class="relative flex flex-col items-center mb-4">
               <RouterLink :to="`/products/${product._id}`">
                 <img
                   :src="product.image"
@@ -300,7 +300,7 @@ const show = reactive({
                 />
               </RouterLink>
               <p
-                class="flex justify-center items-center absolute top-2 left-[-7px] text-sm shadow-md w-[100px] h-[20px] bg-red-500 hover:opacity-70 cursor-pointer"
+                class="flex justify-center items-center absolute top-[-10px] left-[-17px] text-sm shadow-md w-[100px] h-[20px] bg-red-500 hover:opacity-0 cursor-pointer"
               >
                 <!-- <span
                   v-if="checkItem(product)"
@@ -321,7 +321,7 @@ const show = reactive({
                 >
               </p>
             </div>
-            <div class="">
+            <div class="ml-3 space-y-4">
               <RouterLink :to="`/products/${product.id}`">
                 <h5 class="text-base hover:underline">{{ product.name }}</h5>
               </RouterLink>
@@ -340,15 +340,16 @@ const show = reactive({
                   ></i>
                   <i v-else class="fa-regular fa-star"></i>
                 </template>
-                <span>({{ product.soldQuantity }})</span>
+                <span class="text-sm"> Đã bán {{ product.soldQuantity }}</span>
               </ul>
+              <p class="text-white"><span> Hà Nội</span></p>
             </div>
-            <button
+            <!-- <button
               class="bg-primary text-white py-2 px-7 mt-2 rounded hover:opacity-60"
               @click="addToCart(product)"
             >
               Add to cart
-            </button>
+            </button> -->
           </div>
         </article>
       </template>
