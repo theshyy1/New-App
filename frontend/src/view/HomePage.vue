@@ -287,7 +287,7 @@ const show = reactive({
         <article
           v-for="product in productFilters.products"
           :key="product.id"
-          class="shadow-md border-2 bg-orange-300 border-orange-400 py-4 px-2 hover:translate-y-1"
+          class="shadow-md border-2 border-orange-400 bg-orange-200 py-4 px-2 hover:translate-y-1"
           :class="[productStore.darkTheme ? 'bg-[#171010]' : 'bg-white']"
         >
           <div class="">
@@ -300,6 +300,7 @@ const show = reactive({
                 />
               </RouterLink>
               <p
+                v-if="product.star >= 5 || product.soldQuantity >= 50"
                 class="flex justify-center items-center absolute top-[-10px] left-[-17px] text-sm shadow-md w-[100px] h-[20px] bg-red-500 hover:opacity-0 cursor-pointer"
               >
                 <!-- <span
@@ -316,13 +317,14 @@ const show = reactive({
                   :class="{ 'text-black': theme }"
                   >Yêu thích</span
                 > -->
+
                 <span class="text-white" :class="{ 'text-black': theme }"
                   >Yêu thích</span
                 >
               </p>
             </div>
             <div class="ml-3 space-y-4">
-              <RouterLink :to="`/products/${product.id}`">
+              <RouterLink :to="`/products/${product._id}`">
                 <h5 class="text-base hover:underline">{{ product.name }}</h5>
               </RouterLink>
               <p class="text-red-600 my-2">

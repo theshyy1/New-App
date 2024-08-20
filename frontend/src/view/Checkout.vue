@@ -13,6 +13,7 @@ const { userState } = useAuthStore();
 const store = useProductStore();
 // Discount price
 const codeDiscount = ref("");
+const selectedItems = ref([]);
 const shipPrice = ref(userState.user.cart.length * 20);
 const payFee = ref(shipPrice.value);
 
@@ -43,7 +44,7 @@ function getPriceDiscount() {
 }
 
 const totalPriceItems = computed(() => {
-  const total = userState.user.cart.reduce(
+  const total = selectedItems.value.reduce(
     (total, num) =>
       total + (num.quantity ? num.quantity : 1) * getNewestPrice(num.price),
     0
@@ -175,25 +176,36 @@ const handleCheckout = async () => {
           class="w-full h-[230px] bg-white text-black text-base shadow-md overflow-y-auto"
         >
           <ul v-if="userState.user?.cart.length > 0" class="space-y-2 w-full">
-            <li v-for="item in userState.user.cart">
-              <RouterLink
-                :to="`/products/${item.id}`"
-                class="flex justify-around items-center w-full"
-              >
-                <div class="flex items-center py-2">
+            <li v-for="item in userState.user.cart" :key="item._id">
+              <div class="flex justify-around items-center w-full">
+                <input
+                  type="checkbox"
+                  class="px-4"
+                  v-model="selectedItems"
+                  :value="item"
+                />
+                <RouterLink
+                  :to="`/products/${item._id}`"
+                  class="flex items-center py-2"
+                >
                   <img
                     :src="item.image"
                     class="object-cover w-[40px] h-[40px] mr-3 rounded"
                     alt=""
                   />
                   <p class="text-sm w-[180px]">{{ item.name }}</p>
-                </div>
+                </RouterLink>
                 <span>x{{ item.quantity || 1 }}</span>
                 <span class="text-red-500 text-sm"
                   >${{ getNewestPrice(item.price) }}</span
                 >
-              </RouterLink>
+              </div>
             </li>
+            <span
+              v-if="selectedItems.length >= 1"
+              class="block ml-5 text-orange-500 italic shadow-sm"
+              >Đã chọn {{ selectedItems.length }} sản phẩm</span
+            >
           </ul>
           <span v-else>Chưa có sản phẩm</span>
         </div>

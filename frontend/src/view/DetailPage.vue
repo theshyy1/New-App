@@ -23,15 +23,6 @@ onMounted(() => {
 });
 
 const quantity = ref(1);
-function increaseQuantity() {
-  quantity.value++;
-}
-
-function decreaseQuantity() {
-  if (quantity.value > 0) {
-    quantity.value--;
-  }
-}
 
 // Add to wishlist
 const handleClick = async (product) => {
@@ -104,7 +95,7 @@ const addToCart = async (product) => {
     if (index !== -1) {
       user.cart[index].quantity++;
     } else {
-      user.cart.push({ ...product, quantity: 1 });
+      user.cart.push({ ...product, quantity });
     }
 
     await updateUserAPI(user);
@@ -115,6 +106,16 @@ const addToCart = async (product) => {
     });
   }
 };
+
+function increaseQuantity() {
+  quantity.value++;
+}
+
+function decreaseQuantity() {
+  if (quantity.value > 0) {
+    quantity.value--;
+  }
+}
 </script>
 
 <template>
@@ -165,33 +166,35 @@ const addToCart = async (product) => {
           <input type="radio" class="text-red-600" name="1" checked />
           <input type="radio" class="text-green-600" name="1" />
         </div>
-        <div class="space-x-3">
-          <span class="text-xl">Size: </span>
-          <button class="border-[1px] border-black rounded text-sm p-2">
-            XS
-          </button>
-          <button class="border-[1px] border-black rounded text-sm p-2 px-3">
-            S
-          </button>
-          <button
-            class="border-[1px] rounded text-sm p-2 px-3 bg-primary text-white"
-          >
-            M
-          </button>
-          <button class="border-[1px] border-black rounded text-sm p-2 px-3">
-            L
-          </button>
-          <button class="border-[1px] border-black rounded text-sm p-2">
-            XL
-          </button>
+        <div v-if="product?.sll" class="">
+          <div class="space-x-3">
+            <span class="text-xl">Size: </span>
+            <button class="border-[1px] border-black rounded text-sm p-2">
+              XS
+            </button>
+            <button class="border-[1px] border-black rounded text-sm p-2 px-3">
+              S
+            </button>
+            <button
+              class="border-[1px] rounded text-sm p-2 px-3 bg-primary text-white"
+            >
+              M
+            </button>
+            <button class="border-[1px] border-black rounded text-sm p-2 px-3">
+              L
+            </button>
+            <button class="border-[1px] border-black rounded text-sm p-2">
+              XL
+            </button>
+          </div>
         </div>
         <div class="flex justify-between items-center w-[370px] mt-6 mb-[40px]">
           <div
             class="border-[1px] border-black rounded w-[100px] flex justify-around p-1"
           >
-            <span class="block px-3" @click="increaseQuantity"> - </span>
+            <span class="block px-3" @click="decreaseQuantity"> - </span>
             <span> {{ quantity || 1 }} </span>
-            <span class="block px-3" @click="decreaseQuantity"> + </span>
+            <span class="block px-3" @click="increaseQuantity"> + </span>
           </div>
           <button
             class="bg-primary text-white py-2 px-7 rounded hover:opacity-60"
